@@ -50,5 +50,40 @@ func (uc *UserController) CreateUser(c *gin.Context) {
 }
 
 func (uc *UserController) UpdateUser(c *gin.Context) {
+	var req models.UpdateUserRequest
+	var uri models.UpdateUserUri
 
+	if err := c.ShouldBindUri(&uri); err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	updatedUser, err := uc.service.UpdateUser(uri.ID, req)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+	}
+
+	c.JSON(http.StatusOK, updatedUser)
+}
+
+func (uc *UserController) DeleteUser(c *gin.Context) {
+	var uri models.DeleteUserUri
+
+	if err := c.ShouldBindUri(&uri); err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	if err := uc.service.DeleteUser(uri.ID); err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "User deleted!"})
 }

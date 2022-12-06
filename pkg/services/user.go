@@ -34,7 +34,7 @@ func (us *UserService) CreateUser(newUser models.User) (models.User, error) {
 	return newUser, nil
 }
 
-func (us *UserService) UpdateUser(id uuid.UUID, userUpdates models.User) (models.User, error) {
+func (us *UserService) UpdateUser(id uuid.UUID, userUpdates models.UpdateUserRequest) (models.User, error) {
 	if err := us.repository.Model(&models.User{}).Where("user_id = ?", id).Updates(userUpdates).Error; err != nil {
 		return us.repository.UserNill, err
 	}
