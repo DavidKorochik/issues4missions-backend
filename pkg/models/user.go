@@ -18,7 +18,7 @@ type User struct {
 	Department      Department     `json:"-" gorm:"foreignKey:DepartmentRefer"`
 	RoleRefer       string         `json:"role_name"`
 	Role            Role           `json:"-" gorm:"foreignKey:RoleRefer"`
-	Issues          []Issue        `gorm:"foreignKey:IssueID"`
+	Issues          []Issue        `gorm:"foreignKey:UserID"`
 	CreatedAt       time.Time      `json:"created_at" gorm:"not null;default:now()"`
 	UpdatedAt       time.Time      `json:"updated_at" gorm:"not null;default:now()"`
 	DeletedAt       gorm.DeletedAt `json:"deleted_at" gorm:"not null"`
