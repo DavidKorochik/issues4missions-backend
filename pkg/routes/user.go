@@ -19,5 +19,11 @@ func NewUserRoutes(userController controllers.UserController, requestHandler con
 }
 
 func (ur *UserRoutes) SetupUserRoutes(r *gin.Engine) {
-
+	api := ur.requestHandler.Gin.Group("/api")
+	{
+		api.GET("/users", ur.userController.GetUsers)
+		api.POST("/users", ur.userController.CreateUser)
+		api.PUT("/users/:id", ur.userController.UpdateUser)
+		api.DELETE("/users/:id", ur.userController.DeleteUser)
+	}
 }
