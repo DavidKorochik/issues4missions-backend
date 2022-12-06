@@ -13,3 +13,4 @@ composebuild:
 composedown:
 	docker-compose down
 
+.PHONY: server test composeup composebuild composedown
