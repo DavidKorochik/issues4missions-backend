@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/DavidKorochik/issues4missions-backend/pkg/config"
+	"github.com/DavidKorochik/issues4missions-backend/pkg/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -22,5 +23,5 @@ func ConnectToDB(config config.Config) *gorm.DB {
 }
 
 func autoMigrateModels(db *gorm.DB) {
-	db.AutoMigrate()
+	db.AutoMigrate(&models.Issue{}, &models.User{}, &models.Department{}, &models.Role{})
 }
