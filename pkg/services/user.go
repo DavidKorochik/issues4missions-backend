@@ -48,7 +48,7 @@ func (us *UserService) UpdateUser(id uuid.UUID, userUpdates models.UpdateUserReq
 	return udpatedUser, nil
 }
 
-func (us *UserService) DeletedUser(id uuid.UUID) error {
+func (us *UserService) DeleteUser(id uuid.UUID) error {
 	if err := us.repository.Delete(&models.User{}, "user_id = ?", id).Error; err != nil {
 		return err
 	}
