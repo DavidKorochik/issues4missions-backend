@@ -25,7 +25,7 @@ func (us *UserStore) CreateUser(user *models.User) (err error) {
 }
 
 func (us *UserStore) GetUsers() (users *[]models.User, err error) {
-	if err := us.db.Preload("Issues").Preload("DepartmentRefer").Preload("RoleRefer").Find(&users).Error; err != nil {
+	if err := us.db.Preload("Issues").Preload("RoleRefer").Find(&users).Error; err != nil {
 		return us.usersNil, err
 	}
 

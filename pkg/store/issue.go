@@ -25,7 +25,7 @@ func (is *IssueStore) CreateIssue(issue models.Issue) (err error) {
 }
 
 func (is *IssueStore) GetIssues() (issues *[]models.Issue, err error) {
-	if err = is.db.Find(&issues).Error; err != nil {
+	if err = is.db.Preload("DepartmentRefer").Preload("UserID").Find(&issues).Error; err != nil {
 		return is.issuesNil, err
 	}
 
@@ -33,7 +33,7 @@ func (is *IssueStore) GetIssues() (issues *[]models.Issue, err error) {
 }
 
 func (is *IssueStore) GetIssueByID(id uuid.UUID) (issue *models.Issue, err error) {
-	if err = is.db.First(&issue, "issue_id = ?", id).Error; err != nil {
+	if err = is.db.Preload("DepartmentRefer").Preload("UserID").First(&issue, "issue_id = ?", id).Error; err != nil {
 		return is.issueNil, err
 	}
 
