@@ -23,16 +23,16 @@ services:
     ports:
       - 5000:5000
     environment:
-      - DB_URL:postgres://postgres:postgres@localhost:5432/issues_4_missions?sslmode=disable
+      - DB_URL:postgres://postgres:postgres@postgres:5432/issues_4_missions?sslmode=disable
     networks:
       - issues4missions-network
     volumes:
-      - ./app
+      - .:/app
     depends_on:
       - postgres
 
 volumes:
   db:    
-  
+
 networks:
   issues4missions-network:
