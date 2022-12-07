@@ -4,6 +4,7 @@ import (
 	"github.com/DavidKorochik/issues4missions-backend/pkg/config"
 	"github.com/DavidKorochik/issues4missions-backend/pkg/db"
 	"github.com/DavidKorochik/issues4missions-backend/pkg/handlers"
+	"github.com/DavidKorochik/issues4missions-backend/pkg/routes"
 	"github.com/DavidKorochik/issues4missions-backend/pkg/store"
 )
 
@@ -15,5 +16,6 @@ func main() {
 	is := store.NewIssueStore(db)
 	us := store.NewUserStore(db)
 
-	handlers.NewHandler(us, is)
+	handler := handlers.NewHandler(us, is)
+	routes.NewRouter(handler)
 }
