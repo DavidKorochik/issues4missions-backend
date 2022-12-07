@@ -8,9 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func newTestServer(recorder *httptest.ResponseRecorder) *gin.Engine {
+func newTestServer() (*gin.Engine, *httptest.ResponseRecorder) {
+	recorder := httptest.NewRecorder()
 	_, r := gin.CreateTestContext(recorder)
-	return r
+	return r, recorder
 }
 
 func TestMain(m *testing.M) {

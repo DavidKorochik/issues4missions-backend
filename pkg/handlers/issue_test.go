@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"net/http/httptest"
 	"testing"
 	"time"
 
@@ -51,8 +50,7 @@ func TestCreateIssue(t *testing.T) {
 	bodyBuffer, err := json.Marshal(&body)
 	require.NoError(t, err)
 
-	recorder := httptest.NewRecorder()
-	r := newTestServer(recorder)
+	r, recorder := newTestServer()
 	request, err := http.NewRequest(http.MethodPost, "/api/issues", bytes.NewBuffer(bodyBuffer))
 	require.NoError(t, err)
 
@@ -60,4 +58,15 @@ func TestCreateIssue(t *testing.T) {
 
 	require.Equal(t, http.StatusOK, recorder.Code)
 	requireBodyMatchIssue(t, recorder.Body, issue)
+}
+
+func TestGetIssues(t *testing.T) {
+	r, recorder := newTestServer()
+	request, err := http.NewRequest(http.MethodGet, "/api/issues", nil)
+	require.NoError(t, err)
+
+	r.ServeHTTP(recorder, request)
+
+	require.Equal(t, http.StatusOK, recorder.Code)
+	require.NotEmpty(t, recorder.Body)
 }
