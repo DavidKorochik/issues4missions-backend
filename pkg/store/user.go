@@ -29,7 +29,7 @@ func (us *UserStore) GetUsers() (users *[]models.User, err error) {
 		return us.usersNil, err
 	}
 
-	return users, nil
+	return
 }
 
 func (us *UserStore) GetByID(id uuid.UUID) (user *models.User, err error) {
@@ -37,7 +37,7 @@ func (us *UserStore) GetByID(id uuid.UUID) (user *models.User, err error) {
 		return us.userNil, err
 	}
 
-	return user, nil
+	return
 }
 
 func (us *UserStore) UpdateUser(id uuid.UUID, userUpdates models.UpdateUserRequest) (updatedUser *models.User, err error) {
@@ -59,5 +59,5 @@ func (us *UserStore) DeleteUser(id uuid.UUID) (deletedUser *models.User, err err
 		return us.userNil, err
 	}
 
-	return deletedUser, nil
+	return
 }
