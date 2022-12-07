@@ -30,7 +30,7 @@ func TestGetUsers(t *testing.T) {
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			recorder := httptest.NewRecorder()
-
+			server := newTestServer(recorder)
 			request, err := http.NewRequest(http.MethodGet, "/api/users", nil)
 
 			tc.checkResponse(t, recorder)

@@ -10,10 +10,10 @@ import (
 )
 
 type Database struct {
-	DB *gorm.DB
+	*gorm.DB
 }
 
-func ConnectToDB(config config.Config) Database {
+func ConnectToDB(config config.Config) *Database {
 	db, err := gorm.Open(postgres.Open(config.DBUrl), &gorm.Config{})
 
 	if err != nil {
@@ -23,7 +23,7 @@ func ConnectToDB(config config.Config) Database {
 
 	autoMigrateModels(db)
 
-	return Database{
+	return &Database{
 		DB: db,
 	}
 }

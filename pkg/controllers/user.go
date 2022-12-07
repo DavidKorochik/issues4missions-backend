@@ -13,7 +13,7 @@ type UserController struct {
 	service services.UserService
 }
 
-func NewUserController(service services.UserService) *UserController {
+func NewUserController(service services.UserService) UserStore {
 	return &UserController{
 		service: service,
 	}
