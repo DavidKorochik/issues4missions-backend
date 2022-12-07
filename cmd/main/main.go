@@ -8,7 +8,6 @@ import (
 
 func main() {
 	config := config.LoadEnvVariables(".")
-
 	db := db.ConnectToDB(config)
 	server := server.NewServer(db)
 
