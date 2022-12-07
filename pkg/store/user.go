@@ -25,7 +25,7 @@ func (us *UserStore) CreateUser(user *models.User) (err error) {
 }
 
 func (us *UserStore) GetUsers() (users *[]models.User, err error) {
-	if err := us.db.Find(&users).Error; err != nil {
+	if err := us.db.Preload("Issues").Preload("DepartmentRefer").Preload("RoleRefer").Find(&users).Error; err != nil {
 		return us.usersNil, err
 	}
 
@@ -33,7 +33,7 @@ func (us *UserStore) GetUsers() (users *[]models.User, err error) {
 }
 
 func (us *UserStore) GetByID(id uuid.UUID) (user *models.User, err error) {
-	if err := us.db.First(&user, "user_id = ?", id).Error; err != nil {
+	if err := us.db.Preload("Issues").Preload("DepartmentRefer").Preload("RoleRefer").First(&user, "user_id = ?", id).Error; err != nil {
 		return us.userNil, err
 	}
 
