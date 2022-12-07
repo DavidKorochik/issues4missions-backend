@@ -33,3 +33,6 @@ services:
 
 volumes:
   db:    
+  
+networks:
+  issues4missions-network:
