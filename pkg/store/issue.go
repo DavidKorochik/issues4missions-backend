@@ -24,8 +24,8 @@ func (is *IssueStore) CreateIssue(issue models.Issue) (err error) {
 	return is.db.Create(&issue).Error
 }
 
-func (is *IssueStore) GetIssues() (issues *[]models.Issue, err error) {
-	if err = is.db.Preload("DepartmentRefer").Preload("UserID").Find(&issues).Error; err != nil {
+func (is *IssueStore) GetIssues(authUserID uuid.UUID) (issues *[]models.Issue, err error) {
+	if err = is.db.Preload("DepartmentRefer").Preload("UserID").Where("user_id = ?", authUserID).Find(&issues).Error; err != nil {
 		return is.issuesNil, err
 	}
 

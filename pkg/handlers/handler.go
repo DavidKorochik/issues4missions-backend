@@ -6,6 +6,12 @@ import (
 	"github.com/DavidKorochik/issues4missions-backend/pkg/user"
 )
 
+const (
+	authorizationHeaderKey  = "Authorization"
+	authorizationHeaderType = "Bearer"
+	authorizationPayloadKey = "x-auth-token"
+)
+
 type Handler struct {
 	userStore  user.Store
 	issueStore issue.Store
