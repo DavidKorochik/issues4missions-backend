@@ -11,6 +11,10 @@ type GetIssueByIDUri struct {
 	ID uuid.UUID `uri:"id" binding:"required,min=1"`
 }
 
+type GetIssueByDepartmentQuery struct {
+	DepartmentName string `form:"department_name" binding:"required"`
+}
+
 type UpdateIssueRequest struct {
 	Title       string `json:"title" binding:"required"`
 	Description string `json:"description" binding:"required"`

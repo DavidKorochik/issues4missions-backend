@@ -8,6 +8,7 @@ import (
 type Store interface {
 	CreateIssue(issue models.Issue) (err error)
 	GetIssues() (issues *[]models.Issue, err error)
+	GetIssueByDepartment(departmentName string) (issues *[]models.Issue, err error)
 	GetIssueByID(id uuid.UUID) (issue *models.Issue, err error)
 	UpdateIssue(id uuid.UUID, issueUpdates models.UpdateIssueRequest) (updatedIssue *models.Issue, err error)
 	DeleteIssue(id uuid.UUID) (deletedIssue *models.Issue, err error)
