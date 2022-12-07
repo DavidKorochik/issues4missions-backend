@@ -40,6 +40,14 @@ func (is *IssueStore) GetIssueByID(id uuid.UUID) (issue *models.Issue, err error
 	return
 }
 
+func (is *IssueStore) GetIssueByDepartment(departmentName string) (issues *[]models.Issue, err error) {
+	if err = is.db.Preload("DepartmentRefer").Preload("UserID").Where("department_name = ?", departmentName).Find(&issues).Error; err != nil {
+		return is.issuesNil, err
+	}
+
+	return
+}
+
 func (is *IssueStore) UpdateIssue(id uuid.UUID, issueUpdates models.UpdateIssueRequest) (updatedIssue *models.Issue, err error) {
 	if err = is.db.Model(&updatedIssue).Where("issue_id = ?", id).Updates(issueUpdates).Error; err != nil {
 		return is.issueNil, err

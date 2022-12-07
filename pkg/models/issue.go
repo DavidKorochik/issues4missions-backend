@@ -15,7 +15,7 @@ type Issue struct {
 	IsCompleted     bool      `json:"is_completed" gorm:"not null;default:false"`
 	User            User
 	UserID          uuid.UUID
-	DepartmentRefer string         `json:"department_name"`
+	DepartmentRefer string         `json:"department_name" gorm:"column:department_name"`
 	Department      Department     `json:"-" gorm:"foreignKey:DepartmentRefer"`
 	CreatedAt       time.Time      `json:"created_at" gorm:"not null;default:now()"`
 	UpdatedAt       time.Time      `json:"updated_at" gorm:"not null;default:now()"`
