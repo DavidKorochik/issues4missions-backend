@@ -14,7 +14,7 @@ type User struct {
 	PersonalNumber string         `json:"personal_number" gorm:"not null;unique"`
 	SecretCode     string         `json:"secret_code" gorm:"not null;unique"`
 	PhoneNumber    string         `json:"phone_number" gorm:"not null;unique"`
-	RoleRefer      string         `json:"role_name" gorm:"column:role_name;index"`
+	RoleRefer      string         `json:"role_name" gorm:"column:role_name;uniqueIndex"`
 	Role           Role           `json:"-" gorm:"foreignKey:RoleRefer"`
 	Issues         []Issue        `gorm:"foreignKey:UserID"`
 	CreatedAt      time.Time      `json:"created_at" gorm:"not null;default:now()"`
