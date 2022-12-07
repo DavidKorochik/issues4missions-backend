@@ -66,6 +66,29 @@ func (h *Handler) GetIssueByID(c *gin.Context) {
 	c.JSON(http.StatusOK, issue)
 }
 
+func (h *Handler) GetIssueByDepartment(c *gin.Context) {
+	var query models.GetIssueByDepartmentQuery
+
+	if err := c.ShouldBindQuery(&query); err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	issue, err := h.issueStore.GetIssueByDepartment(query.DepartmentName)
+
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			c.JSON(http.StatusNotFound, util.ErrorResponse(err))
+			return
+		}
+
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, issue)
+}
+
 func (h *Handler) UpdateIssue(c *gin.Context) {
 	var uri models.UpdateIssueUri
 	var req models.UpdateIssueRequest
