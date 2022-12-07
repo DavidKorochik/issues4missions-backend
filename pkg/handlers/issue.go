@@ -1,11 +1,14 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/DavidKorochik/issues4missions-backend/pkg/models"
+	"github.com/DavidKorochik/issues4missions-backend/pkg/token"
 	"github.com/DavidKorochik/issues4missions-backend/pkg/util"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -17,7 +20,8 @@ func (h *Handler) CreateIssue(c *gin.Context) {
 		return
 	}
 
-	newIssue := models.Issue{Title: req.Title, Description: req.Description}
+	authPayload := c.MustGet(authorizationPayloadKey).(*token.Payload)
+	newIssue := models.Issue{Title: req.Title, Description: req.Description, UserID: authPayload.UserID}
 
 	if err := h.issueStore.CreateIssue(newIssue); err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
@@ -28,7 +32,8 @@ func (h *Handler) CreateIssue(c *gin.Context) {
 }
 
 func (h *Handler) GetIssues(c *gin.Context) {
-	issues, err := h.issueStore.GetIssues()
+	authPayload := c.MustGet(authorizationPayloadKey).(*token.Payload)
+	issues, err := h.issueStore.GetIssues(authPayload.UserID)
 
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
@@ -103,6 +108,13 @@ func (h *Handler) UpdateIssue(c *gin.Context) {
 		return
 	}
 
+	authPayload := c.MustGet(authorizationPayloadKey).(*token.Payload)
+
+	if !h.isUserManipulatesHisIssue(uri.ID, authPayload.UserID) {
+		c.JSON(http.StatusUnauthorized, fmt.Errorf("User is not authorized"))
+		return
+	}
+
 	updatedIssue, err := h.issueStore.UpdateIssue(uri.ID, req)
 
 	if err != nil {
@@ -126,6 +138,13 @@ func (h *Handler) DeleteIssue(c *gin.Context) {
 		return
 	}
 
+	authPayload := c.MustGet(authorizationPayloadKey).(*token.Payload)
+
+	if !h.isUserManipulatesHisIssue(uri.ID, authPayload.UserID) {
+		c.JSON(http.StatusUnauthorized, fmt.Errorf("User is not authorized"))
+		return
+	}
+
 	deletedIssue, err := h.issueStore.DeleteIssue(uri.ID)
 
 	if err != nil {
@@ -139,4 +158,14 @@ func (h *Handler) DeleteIssue(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, deletedIssue)
+}
+
+func (h *Handler) isUserManipulatesHisIssue(issueID uuid.UUID, userID uuid.UUID) bool {
+	issue, _ := h.issueStore.GetIssueByID(issueID)
+
+	if issue.UserID != userID {
+		return false
+	}
+
+	return true
 }
