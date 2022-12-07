@@ -10,7 +10,7 @@ type Handler struct {
 	issueStore issue.Store
 }
 
-func NewHandlerRepo(us user.Store, is issue.Store) *Handler {
+func NewHandler(us user.Store, is issue.Store) *Handler {
 	return &Handler{
 		userStore:  us,
 		issueStore: is,
