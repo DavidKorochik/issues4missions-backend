@@ -17,5 +17,8 @@ func main() {
 	us := store.NewUserStore(db)
 
 	handler := handlers.NewHandler(us, is)
-	routes.NewRouter(handler)
+
+	router := routes.NewRouter(handler)
+
+	router.StartRouterServer(config.Port)
 }

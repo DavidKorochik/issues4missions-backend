@@ -16,3 +16,7 @@ func NewRouter(handler *handlers.Handler) *Routes {
 		handler: handler,
 	}
 }
+
+func (r *Routes) StartRouterServer(address string) error {
+	return r.router.Run(address)
+}
