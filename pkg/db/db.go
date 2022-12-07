@@ -18,7 +18,9 @@ func ConnectToDB(config config.Config) *Database {
 
 	if err != nil {
 		log.Fatal("Cannot connect to the database ", err)
-		return Database{}
+		return &Database{
+			DB: db,
+		}
 	}
 
 	autoMigrateModels(db)
