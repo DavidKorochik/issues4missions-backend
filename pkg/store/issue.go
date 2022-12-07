@@ -32,7 +32,7 @@ func (is *IssueStore) GetIssues() (issues *[]models.Issue, err error) {
 	return
 }
 
-func (is *IssueStore) GetByID(id uuid.UUID) (issue *models.Issue, err error) {
+func (is *IssueStore) GetIssueByID(id uuid.UUID) (issue *models.Issue, err error) {
 	if err = is.db.First(&issue, "issue_id = ?", id).Error; err != nil {
 		return is.issueNil, err
 	}
@@ -45,11 +45,11 @@ func (is *IssueStore) UpdateIssue(id uuid.UUID, issueUpdates models.UpdateIssueR
 		return is.issueNil, err
 	}
 
-	return is.GetByID(id)
+	return is.GetIssueByID(id)
 }
 
 func (is *IssueStore) DeleteIssue(id uuid.UUID) (deletedIssue *models.Issue, err error) {
-	deletedIssue, err = is.GetByID(id)
+	deletedIssue, err = is.GetIssueByID(id)
 
 	if err != nil {
 		return is.issueNil, err
