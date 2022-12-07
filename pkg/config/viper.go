@@ -7,8 +7,9 @@ import (
 )
 
 type Config struct {
-	DBUrl string `mapstructure:"DB_URL"`
-	Port  string `mapstructure:"PORT"`
+	DBUrl     string `mapstructure:"DB_URL"`
+	Port      string `mapstructure:"PORT"`
+	JWTSecret string `mapstructure:"JWT_SECRET"`
 }
 
 func LoadEnvVariables(path string) (config Config) {

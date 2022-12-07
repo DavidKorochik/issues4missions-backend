@@ -1,6 +1,7 @@
-package config
+package token
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -20,4 +21,12 @@ func NewPayload(userID uuid.UUID, duration time.Duration) *Payload {
 		IssuesAt:  time.Now(),
 		ExpiredAt: time.Now().Add(duration),
 	}
+}
+
+func (p *Payload) Valid() error {
+	if time.Now().After(p.ExpiredAt) {
+		return fmt.Errorf("The time %d of the token expiration has passed", p.ExpiredAt)
+	}
+
+	return nil
 }
