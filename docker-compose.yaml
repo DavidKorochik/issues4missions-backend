@@ -10,8 +10,26 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=issues_4_missions
+    networks:
+      - issues4missions-network
     volumes:
       - db:/var/lib/postgresql/data
+
+  issues4missions:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 5000:5000
+    environment:
+      - DB_URL:postgres://postgres:postgres@localhost:5432/issues_4_missions?sslmode=disable
+    networks:
+      - issues4missions-network
+    volumes:
+      - ./app
+    depends_on:
+      - postgres
 
 volumes:
   db:    
