@@ -1,5 +1,10 @@
 package handlers
 
+import (
+	"github.com/DavidKorochik/issues4missions-backend/pkg/issue"
+	"github.com/DavidKorochik/issues4missions-backend/pkg/user"
+)
+
 type HandlerRepo struct {
 	userStore  user.Store
 	issueStore issue.Store
