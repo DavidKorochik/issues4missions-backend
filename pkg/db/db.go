@@ -9,23 +9,17 @@ import (
 	"gorm.io/gorm"
 )
 
-type Database struct {
-	DB *gorm.DB
-}
-
-func ConnectToDB(config config.Config) Database {
+func ConnectToDB(config config.Config) *gorm.DB {
 	db, err := gorm.Open(postgres.Open(config.DBUrl), &gorm.Config{})
 
 	if err != nil {
 		log.Fatal("Cannot connect to the database ", err)
-		return Database{}
+		return nil
 	}
 
 	autoMigrateModels(db)
 
-	return Database{
-		DB: db,
-	}
+	return db
 }
 
 func autoMigrateModels(db *gorm.DB) {
