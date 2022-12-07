@@ -17,7 +17,14 @@ func (h *Handler) CreateUser(c *gin.Context) {
 		return
 	}
 
-	newUser := models.User{FirstName: req.FirstName, LastName: req.LastName, PersonalNumber: req.PersonalNumber, SecretCode: req.SecretCode, PhoneNumber: req.PhoneNumber}
+	hashedSecretCode, err := hashSecretCode(req.SecretCode)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		return
+	}
+
+	newUser := models.User{FirstName: req.FirstName, LastName: req.LastName, PersonalNumber: req.PersonalNumber, SecretCode: hashedSecretCode, PhoneNumber: req.PhoneNumber}
 
 	if err := h.userStore.CreateUser(&newUser); err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
@@ -116,4 +123,8 @@ func (h *Handler) DeleteUser(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, deletedUser)
+}
+
+func hashSecretCode(secretCode string) (hashSecretCode string, err error) {
+	return util.HashSecretCode(secretCode)
 }
