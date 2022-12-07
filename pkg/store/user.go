@@ -32,7 +32,7 @@ func (us *UserStore) GetUsers() (users *[]models.User, err error) {
 	return
 }
 
-func (us *UserStore) GetByID(id uuid.UUID) (user *models.User, err error) {
+func (us *UserStore) GetUserByID(id uuid.UUID) (user *models.User, err error) {
 	if err := us.db.Preload("Issues").Preload("DepartmentRefer").Preload("RoleRefer").First(&user, "user_id = ?", id).Error; err != nil {
 		return us.userNil, err
 	}
@@ -45,11 +45,11 @@ func (us *UserStore) UpdateUser(id uuid.UUID, userUpdates models.UpdateUserReque
 		return us.userNil, err
 	}
 
-	return us.GetByID(id)
+	return us.GetUserByID(id)
 }
 
 func (us *UserStore) DeleteUser(id uuid.UUID) (deletedUser *models.User, err error) {
-	deletedUser, err = us.GetByID(id)
+	deletedUser, err = us.GetUserByID(id)
 
 	if err != nil {
 		return us.userNil, err

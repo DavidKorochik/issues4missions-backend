@@ -5,13 +5,13 @@ import (
 	"github.com/DavidKorochik/issues4missions-backend/pkg/user"
 )
 
-type HandlerRepo struct {
+type Handler struct {
 	userStore  user.Store
 	issueStore issue.Store
 }
 
-func NewHandlerRepo(us user.Store, is issue.Store) *HandlerRepo {
-	return &HandlerRepo{
+func NewHandlerRepo(us user.Store, is issue.Store) *Handler {
+	return &Handler{
 		userStore:  us,
 		issueStore: is,
 	}
