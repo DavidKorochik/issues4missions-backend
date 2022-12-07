@@ -10,8 +10,12 @@ type CreateUserRequest struct {
 	PhoneNumber    string `json:"phone_number" binding:"required,len=10"`
 }
 
+type GetUserByIDUri struct {
+	ID uuid.UUID `uri:"id" binding:"required,min=1"`
+}
+
 type UpdateUserUri struct {
-	ID uuid.UUID `uri:"id"`
+	ID uuid.UUID `uri:"id" binding:"required,min=1"`
 }
 
 type UpdateUserRequest struct {
@@ -21,5 +25,5 @@ type UpdateUserRequest struct {
 }
 
 type DeleteUserUri struct {
-	ID uuid.UUID `uri:"id"`
+	ID uuid.UUID `uri:"id" binding:"required,min=1"`
 }
