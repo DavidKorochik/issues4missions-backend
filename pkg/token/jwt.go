@@ -4,27 +4,24 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/DavidKorochik/issues4missions-backend/pkg/config"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
 )
 
-func GenerateJWT(userID uuid.UUID, duration time.Duration) (string, error) {
-	config := config.LoadEnvVariables("../../")
+func (maker *JWTMaker) GenerateJWT(userID uuid.UUID, duration time.Duration) (string, error) {
 	payload := NewPayload(userID, duration)
 
 	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, payload)
-	return jwtToken.SignedString([]byte(config.JWTSecret))
+	return jwtToken.SignedString([]byte(maker.secretKey))
 }
 
-func VerifyJWTToken(token string) (*Payload, error) {
-	config := config.LoadEnvVariables("../../")
+func (maker *JWTMaker) VerifyJWTToken(token string) (*Payload, error) {
 	keyFunc := func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("The token is invalid")
 		}
 
-		return []byte(config.JWTSecret), nil
+		return []byte(maker.secretKey), nil
 	}
 
 	jwtToken, err := jwt.ParseWithClaims(token, &Payload{}, keyFunc)
