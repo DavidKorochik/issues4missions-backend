@@ -16,8 +16,9 @@ func main() {
 	is := store.NewIssueStore(db)
 	us := store.NewUserStore(db)
 	as := store.NewAuthStore(db)
+	s := store.NewSessionStore(db)
 
-	handler := handlers.NewHandler(us, is, as)
+	handler := handlers.NewHandler(us, is, as, s)
 
 	router := routes.NewRouter(handler)
 
