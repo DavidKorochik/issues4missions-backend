@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package issue_pb;
+
+import "issue.proto";
+
+message GetIssueByIDRequest {
+    required string id = 1;
+}
+
+message GetIssueByIDResponse {
+    Issue issue = 1;
+}
+
+message GetIssuesResponse {
+    repeated Issue issue = 1;
+}

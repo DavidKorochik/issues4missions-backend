@@ -3,7 +3,10 @@ syntax = "proto3";
 package issue_pb;
 
 import "rpc_create_issue.proto";
+import "rpc_get_issues.proto";
 
 service IssueService {
     rpc CreateIssue (CreateIssueRequest) returns (CreateIssueResponse) {}
+    rpc GetIssueByID (GetIssueByIDRequest) returns (GetIssueByIDResponse) {}
+    rpc GetIssues () returns (GetIssuesResponse) {}
 }
