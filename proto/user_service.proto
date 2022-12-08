@@ -7,6 +7,6 @@ import "rpc_get_users.proto";
 
 service UserService {
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
-    rpc GetUsersByID (GetUsersByIDRequest) returns (GetUsersByIDResponse) {}
-    rpc GetUsers () returns (GetUsersResponse)
+    rpc GetUsersByID (GetUserByIDRequest) returns (GetUserByIDResponse) {}
+    rpc GetUsers (Empty) returns (GetUsersResponse) {}
 }

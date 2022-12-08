@@ -5,7 +5,7 @@ package issue_pb;
 import "issue.proto";
 
 message GetIssueByIDRequest {
-    required string id = 1;
+    string id = 1;
 }
 
 message GetIssueByIDResponse {
@@ -14,4 +14,8 @@ message GetIssueByIDResponse {
 
 message GetIssuesResponse {
     repeated Issue issue = 1;
+}
+
+message Empty {
+    
 }
