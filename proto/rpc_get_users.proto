@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package user_pb;
+
+import "user.proto";
+
+message GetUserByIDRequest {
+    required id string = 1;
+}
+
+message GetUserByIDResponse {
+    User user = 1;
+}
+
+message GetUsersResponse {
+    repeated User user = 1;
+}

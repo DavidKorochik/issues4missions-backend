@@ -3,7 +3,10 @@ syntax = "proto3";
 package user_pb;
 
 import "rpc_create_user.proto";
+import "rpc_get_users.proto";
 
 service UserService {
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
+    rpc GetUsersByID (GetUsersByIDRequest) returns (GetUsersByIDResponse) {}
+    rpc GetUsers () returns (GetUsersResponse)
 }
