@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package user_pb;
+
+import "user.proto";
+
+option go_package = "github.com/DavidKorochik/issues4missions-backend";
+
+message GetUserByIDRequest {
+    string id = 1;
+}
+
+message GetUserByIDResponse {
+    User user = 1;
+}
+
+message GetUsersResponse {
+    User user = 1;
+}
+
+message Empty {
+    
+}

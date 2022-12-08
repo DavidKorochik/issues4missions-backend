@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package user_pb;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/DavidKorochik/issues4missions-backend";
+
+message User {
+    string user_id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    string personal_number = 4;
+    string secret_code = 5;
+    string phone_number = 6;
+    string role_name = 7;
+    google.protobuf.Timestamp created_at = 8;
+    google.protobuf.Timestamp updated_at = 9;
+    google.protobuf.Timestamp deleted_at = 10;
+}
