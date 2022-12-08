@@ -4,6 +4,8 @@ package user_pb;
 
 import "user.proto";
 
+option go_package = "github.com/DavidKorochik/issues4missions-backend";
+
 message CreateUserRequest {
     string first_name = 1;
     string last_name = 2;

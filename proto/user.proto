@@ -4,6 +4,8 @@ package user_pb;
 
 import "google/protobuf/timestamp.proto";
 
+option go_package = "github.com/DavidKorochik/issues4missions-backend";
+
 message User {
     string user_id = 1;
     string first_name = 2;

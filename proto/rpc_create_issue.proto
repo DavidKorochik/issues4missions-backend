@@ -4,6 +4,8 @@ package issue_pb;
 
 import "issue.proto";
 
+option go_package = "github.com/DavidKorochik/issues4missions-backend";
+
 message CreateIssueRequest {
     string title = 1;
     string description  = 2;

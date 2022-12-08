@@ -5,6 +5,8 @@ package user_pb;
 import "rpc_create_user.proto";
 import "rpc_get_users.proto";
 
+option go_package = "github.com/DavidKorochik/issues4missions-backend";
+
 service UserService {
     rpc CreateUser (CreateUserRequest) returns (CreateUserResponse) {}
     rpc GetUsersByID (GetUserByIDRequest) returns (GetUserByIDResponse) {}

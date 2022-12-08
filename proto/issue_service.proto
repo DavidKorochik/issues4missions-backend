@@ -5,6 +5,8 @@ package issue_pb;
 import "rpc_create_issue.proto";
 import "rpc_get_issues.proto";
 
+option go_package = "github.com/DavidKorochik/issues4missions-backend";
+
 service IssueService {
     rpc CreateIssue (CreateIssueRequest) returns (CreateIssueResponse) {}
     rpc GetIssueByID (GetIssueByIDRequest) returns (GetIssueByIDResponse) {}
