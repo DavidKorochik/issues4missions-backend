@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package issue_pb;
+
+import "rpc_create_issue.proto";
+
+service IssueService {
+    rpc CreateIssue (CreateIssueRequest) returns (CreateIssueResponse) {}
+}

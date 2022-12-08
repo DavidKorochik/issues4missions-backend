@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package issue_pb;
+
+import "issue.proto";
+
+message CreateIssueRequest {
+    required title string = 1;
+    required description string = 2;
+}
+
+message CreateIssueResponse {
+    Issue issue = 1;
+}
