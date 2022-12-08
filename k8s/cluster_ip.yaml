@@ -1,0 +1,11 @@
+apiVersion: v1
+Kind: Service
+type: ClusterIP
+metadata:
+  name: issues4missions-api-cluster-ip
+spec:
+  selector:
+    app: issues4missions-api
+  ports:
+    - port: 80
+      targetPort: 5000
