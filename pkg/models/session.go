@@ -8,7 +8,7 @@ import (
 
 type Session struct {
 	SessionID    uuid.UUID `json:"session_id" gorm:"primaryKey"`
-	UserRefer    uuid.UUID `json:"user_id" gorm:"not null"`
+	UserRefer    uuid.UUID `json:"user_id" gorm:"not null;column:user_id"`
 	UserID       uuid.UUID `gorm:"foreignKey:UserRefer;references:UserID"`
 	RefreshToken string    `json:"refresh_token" gorm:"not null"`
 	UserAgent    string    `json:"user_agent" gorm:"not null"`
