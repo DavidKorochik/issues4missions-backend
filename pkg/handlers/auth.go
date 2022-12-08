@@ -44,12 +44,15 @@ func (h *Handler) AuthUser(c *gin.Context) {
 	secretKey := config.JWTSecret
 	maker := token.NewJWTMaker(secretKey)
 
-	token, err := maker.GenerateJWT(user.UserID, time.Hour)
+	// TODO: Get in return the payload struct
+	token, _, err := maker.GenerateJWT(user.UserID, time.Hour)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, token)
+	refreshToken, _, err := maker.GenerateJWT(user.UserID, time.Hour*24)
+
+	c.JSON(http.StatusOK, gin.H{"token": token, "refresh_token": refreshToken})
 }
