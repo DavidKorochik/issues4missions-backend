@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package user_pb;
+
+import "user.proto";
+
+message CreateUserRequest {
+    required string first_name = 2;
+    required string last_name = 3;
+    required string personal_number = 4;
+    required string secret_code = 5;
+    required string phone_number = 6;
+    required string role_name = 7;
+}
+
+message CreateUserResponse {
+    User user = 1;
+}
