@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: issues4missions-deployment
+  labels:
+    app: issues4missions-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: issues4missions-api
+  template:
+    metadata:
+      labels:
+        app: issues4missions-api
+    spec:
+      containers:
+        - name: issues4missions-api
+          image: david2kk/issues4missions-api:latest
+          ports:
+            - containerPort: 5000
