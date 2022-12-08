@@ -44,12 +44,36 @@ func (h *Handler) AuthUser(c *gin.Context) {
 	secretKey := config.JWTSecret
 	maker := token.NewJWTMaker(secretKey)
 
-	token, err := maker.GenerateJWT(user.UserID, time.Hour)
+	token, _, err := maker.GenerateJWT(user.UserID, time.Hour)
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, util.ErrorResponse(err))
+		c.JSON(http.StatusUnauthorized, util.ErrorResponse(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, token)
+	refreshToken, refreshPayload, err := maker.GenerateJWT(user.UserID, time.Hour*24)
+
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, util.ErrorResponse(err))
+		return
+	}
+
+	newSession := models.Session{
+		SessionID:    refreshPayload.ID,
+		UserRefer:    refreshPayload.UserID,
+		RefreshToken: refreshToken,
+		UserAgent:    c.Request.UserAgent(),
+		ClientIP:     c.ClientIP(),
+		IsBlocked:    false,
+		ExpiresAt:    time.Now().Add(time.Hour * 24),
+	}
+
+	err = h.sessionStore.CreateSession(&newSession)
+
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, util.ErrorResponse(err))
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"token": token, "refresh_token": refreshToken})
 }

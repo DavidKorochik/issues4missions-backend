@@ -8,11 +8,17 @@ import (
 	"github.com/google/uuid"
 )
 
-func (maker *JWTMaker) GenerateJWT(userID uuid.UUID, duration time.Duration) (string, error) {
+func (maker *JWTMaker) GenerateJWT(userID uuid.UUID, duration time.Duration) (string, *Payload, error) {
 	payload := NewPayload(userID, duration)
 
 	jwtToken := jwt.NewWithClaims(jwt.SigningMethodHS256, payload)
-	return jwtToken.SignedString([]byte(maker.secretKey))
+	accessToken, err := jwtToken.SignedString([]byte(maker.secretKey))
+
+	if err != nil {
+		return "", payload, err
+	}
+
+	return accessToken, payload, nil
 }
 
 func (maker *JWTMaker) VerifyJWTToken(token string) (*Payload, error) {
