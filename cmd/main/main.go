@@ -19,7 +19,7 @@ func main() {
 	ds := store.NewDepartmentStore(db)
 	s := store.NewSessionStore(db)
 
-	handler := handlers.NewHandler(us, is, as, s)
+	handler := handlers.NewHandler(us, is, ds, as, s)
 
 	router := routes.NewRouter(handler)
 
