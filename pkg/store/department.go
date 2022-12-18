@@ -44,7 +44,7 @@ func (ds *DepartmentStore) UpdateDepartment(departmentUpdates models.Department)
 		return ds.DepartmentNil, err
 	}
 
-	return
+	return ds.GetDepartmentByName(departmentUpdates.DepartmentName)
 }
 
 func (ds *DepartmentStore) DeleteDepartment(departmentName string) (deletedDepartment *models.Department, err error) {
